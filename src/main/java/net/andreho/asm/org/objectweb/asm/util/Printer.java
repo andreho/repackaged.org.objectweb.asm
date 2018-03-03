@@ -29,19 +29,19 @@
  */
 package net.andreho.asm.org.objectweb.asm.util;
 
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.andreho.asm.org.objectweb.asm.Attribute;
 import net.andreho.asm.org.objectweb.asm.Handle;
 import net.andreho.asm.org.objectweb.asm.Label;
 import net.andreho.asm.org.objectweb.asm.Opcodes;
 import net.andreho.asm.org.objectweb.asm.TypePath;
 
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * An abstract converter from visit events to text.
- * 
+ *
  * @author Eric Bruneton
  */
 public abstract class Printer {
@@ -66,25 +66,25 @@ public abstract class Printer {
 
     static {
         String s = "NOP,ACONST_NULL,ICONST_M1,ICONST_0,ICONST_1,ICONST_2,"
-                + "ICONST_3,ICONST_4,ICONST_5,LCONST_0,LCONST_1,FCONST_0,"
-                + "FCONST_1,FCONST_2,DCONST_0,DCONST_1,BIPUSH,SIPUSH,LDC,,,"
-                + "ILOAD,LLOAD,FLOAD,DLOAD,ALOAD,,,,,,,,,,,,,,,,,,,,,IALOAD,"
-                + "LALOAD,FALOAD,DALOAD,AALOAD,BALOAD,CALOAD,SALOAD,ISTORE,"
-                + "LSTORE,FSTORE,DSTORE,ASTORE,,,,,,,,,,,,,,,,,,,,,IASTORE,"
-                + "LASTORE,FASTORE,DASTORE,AASTORE,BASTORE,CASTORE,SASTORE,POP,"
-                + "POP2,DUP,DUP_X1,DUP_X2,DUP2,DUP2_X1,DUP2_X2,SWAP,IADD,LADD,"
-                + "FADD,DADD,ISUB,LSUB,FSUB,DSUB,IMUL,LMUL,FMUL,DMUL,IDIV,LDIV,"
-                + "FDIV,DDIV,IREM,LREM,FREM,DREM,INEG,LNEG,FNEG,DNEG,ISHL,LSHL,"
-                + "ISHR,LSHR,IUSHR,LUSHR,IAND,LAND,IOR,LOR,IXOR,LXOR,IINC,I2L,"
-                + "I2F,I2D,L2I,L2F,L2D,F2I,F2L,F2D,D2I,D2L,D2F,I2B,I2C,I2S,LCMP,"
-                + "FCMPL,FCMPG,DCMPL,DCMPG,IFEQ,IFNE,IFLT,IFGE,IFGT,IFLE,"
-                + "IF_ICMPEQ,IF_ICMPNE,IF_ICMPLT,IF_ICMPGE,IF_ICMPGT,IF_ICMPLE,"
-                + "IF_ACMPEQ,IF_ACMPNE,GOTO,JSR,RET,TABLESWITCH,LOOKUPSWITCH,"
-                + "IRETURN,LRETURN,FRETURN,DRETURN,ARETURN,RETURN,GETSTATIC,"
-                + "PUTSTATIC,GETFIELD,PUTFIELD,INVOKEVIRTUAL,INVOKESPECIAL,"
-                + "INVOKESTATIC,INVOKEINTERFACE,INVOKEDYNAMIC,NEW,NEWARRAY,"
-                + "ANEWARRAY,ARRAYLENGTH,ATHROW,CHECKCAST,INSTANCEOF,"
-                + "MONITORENTER,MONITOREXIT,,MULTIANEWARRAY,IFNULL,IFNONNULL,";
+                   + "ICONST_3,ICONST_4,ICONST_5,LCONST_0,LCONST_1,FCONST_0,"
+                   + "FCONST_1,FCONST_2,DCONST_0,DCONST_1,BIPUSH,SIPUSH,LDC,,,"
+                   + "ILOAD,LLOAD,FLOAD,DLOAD,ALOAD,,,,,,,,,,,,,,,,,,,,,IALOAD,"
+                   + "LALOAD,FALOAD,DALOAD,AALOAD,BALOAD,CALOAD,SALOAD,ISTORE,"
+                   + "LSTORE,FSTORE,DSTORE,ASTORE,,,,,,,,,,,,,,,,,,,,,IASTORE,"
+                   + "LASTORE,FASTORE,DASTORE,AASTORE,BASTORE,CASTORE,SASTORE,POP,"
+                   + "POP2,DUP,DUP_X1,DUP_X2,DUP2,DUP2_X1,DUP2_X2,SWAP,IADD,LADD,"
+                   + "FADD,DADD,ISUB,LSUB,FSUB,DSUB,IMUL,LMUL,FMUL,DMUL,IDIV,LDIV,"
+                   + "FDIV,DDIV,IREM,LREM,FREM,DREM,INEG,LNEG,FNEG,DNEG,ISHL,LSHL,"
+                   + "ISHR,LSHR,IUSHR,LUSHR,IAND,LAND,IOR,LOR,IXOR,LXOR,IINC,I2L,"
+                   + "I2F,I2D,L2I,L2F,L2D,F2I,F2L,F2D,D2I,D2L,D2F,I2B,I2C,I2S,LCMP,"
+                   + "FCMPL,FCMPG,DCMPL,DCMPG,IFEQ,IFNE,IFLT,IFGE,IFGT,IFLE,"
+                   + "IF_ICMPEQ,IF_ICMPNE,IF_ICMPLT,IF_ICMPGE,IF_ICMPGT,IF_ICMPLE,"
+                   + "IF_ACMPEQ,IF_ACMPNE,GOTO,JSR,RET,TABLESWITCH,LOOKUPSWITCH,"
+                   + "IRETURN,LRETURN,FRETURN,DRETURN,ARETURN,RETURN,GETSTATIC,"
+                   + "PUTSTATIC,GETFIELD,PUTFIELD,INVOKEVIRTUAL,INVOKESPECIAL,"
+                   + "INVOKESTATIC,INVOKEINTERFACE,INVOKEDYNAMIC,NEW,NEWARRAY,"
+                   + "ANEWARRAY,ARRAYLENGTH,ATHROW,CHECKCAST,INSTANCEOF,"
+                   + "MONITORENTER,MONITOREXIT,,MULTIANEWARRAY,IFNULL,IFNONNULL,";
         OPCODES = new String[200];
         int i = 0;
         int j = 0;
@@ -104,8 +104,8 @@ public abstract class Printer {
         }
 
         s = "H_GETFIELD,H_GETSTATIC,H_PUTFIELD,H_PUTSTATIC,"
-                + "H_INVOKEVIRTUAL,H_INVOKESTATIC,H_INVOKESPECIAL,"
-                + "H_NEWINVOKESPECIAL,H_INVOKEINTERFACE,";
+            + "H_INVOKEVIRTUAL,H_INVOKESTATIC,H_INVOKESPECIAL,"
+            + "H_NEWINVOKESPECIAL,H_INVOKEINTERFACE,";
         HANDLE_TAG = new String[10];
         j = 0;
         i = 1;
@@ -117,7 +117,7 @@ public abstract class Printer {
 
     /**
      * The ASM API version implemented by this class. The value of this field
-     * must be one of {@link Opcodes#ASM4} or {@link Opcodes#ASM5}.
+     * must be one of {@link Opcodes#ASM4}, {@link Opcodes#ASM5} or {@link Opcodes#ASM6}.
      */
     protected final int api;
 
@@ -145,7 +145,7 @@ public abstract class Printer {
      *
      * @param api
      *            the ASM API version implemented by this printer. Must be one
-     *            of {@link Opcodes#ASM4} or {@link Opcodes#ASM5}.
+     *            of {@link Opcodes#ASM4}, {@link Opcodes#ASM5} or {@link Opcodes#ASM6}.
      */
     protected Printer(final int api) {
         this.api = api;
@@ -180,8 +180,8 @@ public abstract class Printer {
      *            May be <tt>null</tt>.
      */
     public abstract void visit(final int version, final int access,
-            final String name, final String signature, final String superName,
-            final String[] interfaces);
+                               final String name, final String signature, final String superName,
+                               final String[] interfaces);
 
     /**
      * Class source.
@@ -196,6 +196,24 @@ public abstract class Printer {
      *            <tt>null</tt>.
      */
     public abstract void visitSource(final String source, final String debug);
+
+
+    /**
+     * Module.
+     * See {@link net.andreho.asm.org.objectweb.asm.ClassVisitor#visitModule(String, int)}.
+     *
+     * @param name
+     *            module name.
+     * @param access
+     *            module flags, among {@code ACC_OPEN}, {@code ACC_SYNTHETIC}
+     *            and {@code ACC_MANDATED}.
+     * @param version
+     *            module version or null.
+     * @return
+     */
+    public Printer visitModule(String name, int access, String version) {
+        throw new RuntimeException("Must be overriden");
+    }
 
     /**
      * Class outer class.
@@ -216,7 +234,7 @@ public abstract class Printer {
      *            enclosing class.
      */
     public abstract void visitOuterClass(final String owner, final String name,
-            final String desc);
+                                         final String desc);
 
     /**
      * Class annotation.
@@ -229,7 +247,7 @@ public abstract class Printer {
      * @return the printer
      */
     public abstract Printer visitClassAnnotation(final String desc,
-            final boolean visible);
+                                                 final boolean visible);
 
     /**
      * Class type annotation.
@@ -253,7 +271,7 @@ public abstract class Printer {
      * @return the printer
      */
     public Printer visitClassTypeAnnotation(final int typeRef,
-            final TypePath typePath, final String desc, final boolean visible) {
+                                            final TypePath typePath, final String desc, final boolean visible) {
         throw new RuntimeException("Must be overriden");
     }
 
@@ -285,7 +303,7 @@ public abstract class Printer {
      *            the enclosing class.
      */
     public abstract void visitInnerClass(final String name,
-            final String outerName, final String innerName, final int access);
+                                         final String outerName, final String innerName, final int access);
 
     /**
      * Class field.
@@ -314,7 +332,7 @@ public abstract class Printer {
      * @return the printer
      */
     public abstract Printer visitField(final int access, final String name,
-            final String desc, final String signature, final Object value);
+                                       final String desc, final String signature, final Object value);
 
     /**
      * Class method.
@@ -339,12 +357,51 @@ public abstract class Printer {
      * @return the printer
      */
     public abstract Printer visitMethod(final int access, final String name,
-            final String desc, final String signature, final String[] exceptions);
+                                        final String desc, final String signature, final String[] exceptions);
 
     /**
      * Class end. See {@link net.andreho.asm.org.objectweb.asm.ClassVisitor#visitEnd}.
      */
     public abstract void visitClassEnd();
+
+    // ------------------------------------------------------------------------
+    // Module
+    // ------------------------------------------------------------------------
+
+    public void visitMainClass(String mainClass) {
+        throw new RuntimeException("Must be overriden");
+    }
+
+    public void visitPackage(String packaze) {
+        throw new RuntimeException("Must be overriden");
+    }
+
+    public void visitRequire(String module, int access, String version) {
+        throw new RuntimeException("Must be overriden");
+    }
+
+    public void visitExport(String packaze, int access, String... modules) {
+        throw new RuntimeException("Must be overriden");
+    }
+
+    public void visitOpen(String packaze, int access, String... modules) {
+        throw new RuntimeException("Must be overriden");
+    }
+
+    public void visitUse(String service) {
+        throw new RuntimeException("Must be overriden");
+    }
+
+    public void visitProvide(String service, String... providers) {
+        throw new RuntimeException("Must be overriden");
+    }
+
+    /**
+     * Module end. See {@link net.andreho.asm.org.objectweb.asm.ModuleVisitor#visitEnd}.
+     */
+    public void visitModuleEnd() {
+        throw new RuntimeException("Must be overriden");
+    }
 
     // ------------------------------------------------------------------------
     // Annotations
@@ -383,7 +440,7 @@ public abstract class Printer {
      *            the actual enumeration value.
      */
     public abstract void visitEnum(final String name, final String desc,
-            final String value);
+                                   final String value);
 
     /**
      * Nested annotation value.
@@ -432,7 +489,7 @@ public abstract class Printer {
      * @return the printer
      */
     public abstract Printer visitFieldAnnotation(final String desc,
-            final boolean visible);
+                                                 final boolean visible);
 
     /**
      * Field type annotation.
@@ -453,7 +510,7 @@ public abstract class Printer {
      * @return the printer
      */
     public Printer visitFieldTypeAnnotation(final int typeRef,
-            final TypePath typePath, final String desc, final boolean visible) {
+                                            final TypePath typePath, final String desc, final boolean visible) {
         throw new RuntimeException("Must be overriden");
     }
 
@@ -510,7 +567,7 @@ public abstract class Printer {
      * @return the printer
      */
     public abstract Printer visitMethodAnnotation(final String desc,
-            final boolean visible);
+                                                  final boolean visible);
 
     /**
      * Method type annotation.
@@ -531,7 +588,7 @@ public abstract class Printer {
      * @return the printer
      */
     public Printer visitMethodTypeAnnotation(final int typeRef,
-            final TypePath typePath, final String desc, final boolean visible) {
+                                             final TypePath typePath, final String desc, final boolean visible) {
         throw new RuntimeException("Must be overriden");
     }
 
@@ -548,7 +605,7 @@ public abstract class Printer {
      * @return the printer
      */
     public abstract Printer visitParameterAnnotation(final int parameter,
-            final String desc, final boolean visible);
+                                                     final String desc, final boolean visible);
 
     /**
      * Method attribute.
@@ -644,7 +701,7 @@ public abstract class Printer {
      *             Opcodes#F_SAME frame, in which case it is silently ignored).
      */
     public abstract void visitFrame(final int type, final int nLocal,
-            final Object[] local, final int nStack, final Object[] stack);
+                                    final Object[] local, final int nStack, final Object[] stack);
 
     /**
      * Method instruction.
@@ -708,7 +765,7 @@ public abstract class Printer {
      * Method instruction.
      * See {@link net.andreho.asm.org.objectweb.asm.MethodVisitor#visitTypeInsn}.
      *
-    /**
+     /**
      * Visits a type instruction. A type instruction is an instruction that
      * takes the internal name of a class as parameter.
      *
@@ -738,7 +795,7 @@ public abstract class Printer {
      *            the field's descriptor (see {@link net.andreho.asm.org.objectweb.asm.Type Type}).
      */
     public abstract void visitFieldInsn(final int opcode, final String owner,
-            final String name, final String desc);
+                                        final String name, final String desc);
 
     /**
      * Method instruction.
@@ -758,7 +815,7 @@ public abstract class Printer {
      */
     @Deprecated
     public void visitMethodInsn(final int opcode, final String owner,
-            final String name, final String desc) {
+                                final String name, final String desc) {
         if (api >= Opcodes.ASM5) {
             boolean itf = opcode == Opcodes.INVOKEINTERFACE;
             visitMethodInsn(opcode, owner, name, desc, itf);
@@ -786,11 +843,11 @@ public abstract class Printer {
      *            if the method's owner class is an interface.
      */
     public void visitMethodInsn(final int opcode, final String owner,
-            final String name, final String desc, final boolean itf) {
+                                final String name, final String desc, final boolean itf) {
         if (api < Opcodes.ASM5) {
             if (itf != (opcode == Opcodes.INVOKEINTERFACE)) {
                 throw new IllegalArgumentException(
-                        "INVOKESPECIAL/STATIC on interfaces require ASM 5");
+                  "INVOKESPECIAL/STATIC on interfaces require ASM 5");
             }
             visitMethodInsn(opcode, owner, name, desc);
             return;
@@ -818,7 +875,7 @@ public abstract class Printer {
      *            array so a caller should expect that this array may change.
      */
     public abstract void visitInvokeDynamicInsn(String name, String desc,
-            Handle bsm, Object... bsmArgs);
+                                                Handle bsm, Object... bsmArgs);
 
     /**
      * Method jump instruction.
@@ -920,7 +977,7 @@ public abstract class Printer {
      *            beginning of the handler block for the <tt>min + i</tt> key.
      */
     public abstract void visitTableSwitchInsn(final int min, final int max,
-            final Label dflt, final Label... labels);
+                                              final Label dflt, final Label... labels);
 
     /**
      * Method instruction.
@@ -935,7 +992,7 @@ public abstract class Printer {
      *            beginning of the handler block for the <tt>keys[i]</tt> key.
      */
     public abstract void visitLookupSwitchInsn(final Label dflt,
-            final int[] keys, final Label[] labels);
+                                               final int[] keys, final Label[] labels);
 
     /**
      * Method instruction.
@@ -947,7 +1004,7 @@ public abstract class Printer {
      *            number of dimensions of the array to allocate.
      */
     public abstract void visitMultiANewArrayInsn(final String desc,
-            final int dims);
+                                                 final int dims);
 
     /**
      * Instruction type annotation.
@@ -976,7 +1033,7 @@ public abstract class Printer {
      * @return the printer
      */
     public Printer visitInsnAnnotation(final int typeRef,
-            final TypePath typePath, final String desc, final boolean visible) {
+                                       final TypePath typePath, final String desc, final boolean visible) {
         throw new RuntimeException("Must be overriden");
     }
 
@@ -999,7 +1056,7 @@ public abstract class Printer {
      *             (by the {@link #visitLabel visitLabel} method).
      */
     public abstract void visitTryCatchBlock(final Label start, final Label end,
-            final Label handler, final String type);
+                                            final Label handler, final String type);
 
     /**
      * Try catch block type annotation.
@@ -1021,7 +1078,7 @@ public abstract class Printer {
      * @return the printer
      */
     public Printer visitTryCatchAnnotation(final int typeRef,
-            final TypePath typePath, final String desc, final boolean visible) {
+                                           final TypePath typePath, final String desc, final boolean visible) {
         throw new RuntimeException("Must be overriden");
     }
 
@@ -1050,8 +1107,8 @@ public abstract class Printer {
      *             visitor (by the {@link #visitLabel visitLabel} method).
      */
     public abstract void visitLocalVariable(final String name,
-            final String desc, final String signature, final Label start,
-            final Label end, final int index);
+                                            final String desc, final String signature, final Label start,
+                                            final Label end, final int index);
 
     /**
      * Local variable type annotation.
@@ -1084,8 +1141,8 @@ public abstract class Printer {
      * @return the printer
      */
     public Printer visitLocalVariableAnnotation(final int typeRef,
-            final TypePath typePath, final Label[] start, final Label[] end,
-            final int[] index, final String desc, final boolean visible) {
+                                                final TypePath typePath, final Label[] start, final Label[] end,
+                                                final int[] index, final String desc, final boolean visible) {
         throw new RuntimeException("Must be overriden");
     }
 
@@ -1123,7 +1180,7 @@ public abstract class Printer {
 
     /**
      * Returns the text constructed by this visitor.
-     * 
+     *
      * @return the text constructed by this visitor.
      */
     public List<Object> getText() {
@@ -1132,7 +1189,7 @@ public abstract class Printer {
 
     /**
      * Prints the text constructed by this visitor.
-     * 
+     *
      * @param pw
      *            the print writer to be used.
      */
@@ -1142,17 +1199,13 @@ public abstract class Printer {
 
     /**
      * Appends a quoted string to a given buffer.
-     * 
+     *
      * @param buf
      *            the buffer where the string must be added.
      * @param s
      *            the string to be added.
      */
     public static void appendString(final StringBuffer buf, final String s) {
-        if(s == null) {
-            buf.append("null");
-            return;
-        }
         buf.append('\"');
         for (int i = 0; i < s.length(); ++i) {
             char c = s.charAt(i);
@@ -1183,7 +1236,7 @@ public abstract class Printer {
 
     /**
      * Prints the given string tree.
-     * 
+     *
      * @param pw
      *            the writer to be used to print the tree.
      * @param l
